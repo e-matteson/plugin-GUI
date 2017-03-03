@@ -23,3 +23,16 @@ New plugin developers can publish links to their work in `this list`_ to make th
 .. _wiki: http://open-ephys.atlassian.net
 .. _different branches: https://open-ephys.atlassian.net/wiki/display/OEW/Using+Git
 .. _this list: https://open-ephys.atlassian.net/wiki/display/OEW/Third-party+plugin+repositories
+
+==================================
+Borton Lab Notes
+==================================
+
+Figuring out program structure
+----------------------------
+
+- anything that's a ChangeListener gets updates from the GUI
+- MainWindow makes a new ProcessorGraph, and passes it to a new AudioComponent, which then wraps it in an AudioProcessPlayer.
+- The ProcessorGraph contains all the processors added to the toolchain in the GUI.
+
+- The processor graph is serialized down to a list of AudioGraphRenderingOp objects.
