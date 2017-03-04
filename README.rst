@@ -33,6 +33,11 @@ Figuring out program structure
 
 - anything that's a ChangeListener gets updates from the GUI
 - MainWindow makes a new ProcessorGraph, and passes it to a new AudioComponent, which then wraps it in an AudioProcessPlayer.
-- The ProcessorGraph contains all the processors added to the toolchain in the GUI.
 
-- The processor graph is serialized down to a list of AudioGraphRenderingOp objects.
+- The ProcessorGraph is a child of juce_AudioProcessorGraph, and it contains all the processors added to the toolchain in the GUI (plus some default processors). Each processor in the graph is called a node. There can be connections between them.
+
+- A processor graph is serialized down to a list of AudioGraphRenderingOp objects, which are executed sequentially whenever AudioProcessorGraph::processBlock() is called.
+
+- AudioProcessorGraph has an AudioSampleBuffer called renderingBuffers that stores the data while it is read or modified by each node in the graph. Specifically, when a ProcessBufferOp is performed for some specific processor, it takes a reference to renderingBuffer and creates a new AudioSampleBuffer that contains pointers to the same data stored in renderingBuffer. It passes that buffer to the AudioProcessor itself, which can use the pointers to read and modify the original data in renderingBuffer.
+
+- AudioProcessorGraph is not itself multithreaded. Individual processors/nodes can contain multiple threads. For example, sources will often have a separate DataThread that gets data from some external hardware (like the acquisition board's FPGA) and stores it in a buffer. When AudioProcessorGraph call its process() callback, it immediately reads some recent data out of that buffer and returns it.
