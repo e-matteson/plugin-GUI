@@ -36,6 +36,10 @@ TestSinkEditor::TestSinkEditor(GenericProcessor* parentNode, bool useDefaultPara
 	addAndMakeVisible(exampleButton);
 }
 
+TestSinkEditor::~TestSinkEditor()
+{
+}
+
 /**
 The listener methods that reacts to the button click. The same method is called for all buttons
 on the editor, so the button variable, which cointains a pointer to the button that called the method
