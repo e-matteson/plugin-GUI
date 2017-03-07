@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpikeSorter", "SpikeSorter\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExampleProcessor", "ExampleProcessor\ExampleProcessor.vcxproj", "{767D282E-0BE5-4B35-874A-3B1ED925F06B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFilter", "TestFilter\TestFilter.vcxproj", "{375EF929-354A-41C5-B0E2-8715BF23B0EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -177,6 +179,15 @@ Global
 		{767D282E-0BE5-4B35-874A-3B1ED925F06B}.Debug|x64.ActiveCfg = Debug|x64
 		{767D282E-0BE5-4B35-874A-3B1ED925F06B}.Release|Win32.ActiveCfg = Release|Win32
 		{767D282E-0BE5-4B35-874A-3B1ED925F06B}.Release|x64.ActiveCfg = Release|x64
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Debug|Win32.Build.0 = Debug|Win32
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Debug|x64.ActiveCfg = Debug|x64
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Debug|x64.Build.0 = Debug|x64
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Debug|x64.Deploy.0 = Debug|x64
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Release|Win32.ActiveCfg = Release|Win32
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Release|Win32.Build.0 = Release|Win32
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Release|x64.ActiveCfg = Release|x64
+		{375EF929-354A-41C5-B0E2-8715BF23B0EC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

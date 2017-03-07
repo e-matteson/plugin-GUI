@@ -76,6 +76,17 @@ void TestFilter::process(AudioSampleBuffer& buffer,
 	Generic structure for processing buffer data 
 	*/
 	int nChannels = buffer.getNumChannels();
+
+	int nSamplesInput = getNumSamples(0);
+	const float* pRead; float* pWrite;
+
+	for (int iSample = 0; iSample < nSamplesInput; iSample++)
+	{
+		pRead = buffer.getReadPointer(0, iSample);
+		pWrite = buffer.getWritePointer(1, iSample);
+		*pWrite = (*pRead)/2;
+	}
+
 	for (int chan = 0; chan < nChannels; chan++)
 	{
 		int nSamples = getNumSamples(chan);
