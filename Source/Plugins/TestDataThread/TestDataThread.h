@@ -13,9 +13,12 @@ class TestDataThread : public DataThread
 {
 public:
 
-  // TODO what should the constructor do?
-  // DataThread(SourceNode* sn);
-  // ~DataThread();
+  // TODO should the constructor do anything more specific?
+  // TestDataThread(SourceNode* sn);
+  // ~TestDataThread();
+
+
+  void run(); // this isn't virtual, we can use the parent's if we want
 
 
   /** Fills the DataBuffer with incoming data. This is the most important
