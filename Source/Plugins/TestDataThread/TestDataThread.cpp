@@ -2,12 +2,17 @@
 #include "TestDataThreadEditor.h"
 
 
-/*TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
+TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
 {
 	looptime = 5;
+  num_channels = 8;
 }
-*/
-// We can optionally override run() to do some initialization routine
+
+TestDataThread::~TestDataThread()
+{
+}
+
+// We could optionally override run() to do some initialization routine
 //  before updateBuffer() starts running in a loop
 void TestDataThread::run()
 {
@@ -105,22 +110,30 @@ bool TestDataThread::isReady()
 	return true;
 }
 
-//int TestDataThread::modifyChannelName(int channel, String newName)
-//{
-//}
-//
+int TestDataThread::modifyChannelName(int channel, String newName)
+{
+  // Do something with ChannelCustomInfo, eventually
+  return 0;
+}
+
 //int TestDataThread::modifyChannelGain(int channel, float gain)
 //{
 //}
 //
 //
-//void TestDataThread::getEventChannelNames(StringArray& names)
-//{
-//}
-//
-//bool TestDataThread::usesCustomNames()
-//{
-//}
+void TestDataThread::getEventChannelNames(StringArray& names)
+{
+  names.clear();
+  for (int k = 0; k < num_channels; k++)
+    {
+      names.add("TEST"+String(k+1));
+    }
+}
+
+bool TestDataThread::usesCustomNames()
+{
+  return false;
+}
 
 
 //  /** Create the DataThread custom editor, if any*/

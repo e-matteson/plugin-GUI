@@ -16,8 +16,8 @@ class TestDataThread : public DataThread
 public:
 
   // TODO should the constructor do anything more specific?
-  // TestDataThread(SourceNode* sn);
-  // ~TestDataThread();
+  TestDataThread(SourceNode* sn);
+  ~TestDataThread();
 
   void run(); // this isn't virtual, we can use the parent's if we want
 
@@ -76,7 +76,7 @@ public:
 private:
 
   void setDefaultChannelNames();
-
+  int num_channels;
   int looptime;
 
 };
