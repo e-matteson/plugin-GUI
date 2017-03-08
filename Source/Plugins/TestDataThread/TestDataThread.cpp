@@ -7,6 +7,7 @@ TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
   looptime = 5;
   num_channels = 8;
   samplecounter = 0;
+  dataBuffer = new DataBuffer(2, 10000);
 }
 
 TestDataThread::~TestDataThread()
@@ -33,7 +34,8 @@ bool TestDataThread::updateBuffer()
 	uint64 eventCode = 0;
 	float thisSample;
 
-	thisSample = sin(samplecounter);
+	/*thisSample = sin(samplecounter);*/
+	thisSample = 1;
 
 	dataBuffer->addToBuffer(&thisSample, &samplecounter, &eventCode, 1);
 	samplecounter++;
