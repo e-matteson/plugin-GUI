@@ -74,35 +74,41 @@ bool TestDataThread::stopAcquisition()
 }
 
 
-//  /** Returns the number of continuous headstage channels the data source can provide.*/
-//int TestDataThread::getNumHeadstageOutputs()
-//{
-//}
-//
-//  /** Returns the number of continuous aux channels the data source can provide.*/
-//int TestDataThread::getNumAuxOutputs()
-//{
-//}
-//
-//  /** Returns the number of continuous ADC channels the data source can provide.*/
-//int TestDataThread::getNumAdcOutputs()
-//{
-//}
-//
-//  /** Returns the sample rate of the data source.*/
-//float TestDataThread::getSampleRate()
-//{
-//}
-//
-//  /** Returns the volts per bit of the data source.*/
-//float TestDataThread::getBitVolts(Channel* chan)
-//{
-//}
-//
-//  /** Returns the number of event channels of the data source.*/
-//int TestDataThread::getNumEventChannels()
-//{
-//}
+  /** Returns the number of continuous headstage channels the data source can provide.*/
+int TestDataThread::getNumHeadstageOutputs()
+{
+	return 0;
+}
+
+  /** Returns the number of continuous aux channels the data source can provide.*/
+int TestDataThread::getNumAuxOutputs()
+{
+	return 0;
+}
+
+  /** Returns the number of continuous ADC channels the data source can provide.*/
+int TestDataThread::getNumAdcOutputs()
+{
+	return 1;
+}
+
+  /** Returns the sample rate of the data source.*/
+float TestDataThread::getSampleRate()
+{
+	return 1000 / looptime;
+}
+
+  /** Returns the volts per bit of the data source.*/
+float TestDataThread::getBitVolts(Channel* chan)
+{
+	return 1;
+}
+
+  /** Returns the number of event channels of the data source.*/
+int TestDataThread::getNumEventChannels()
+{
+	return 0;
+}
 
   /** Notifies if the device is ready for acquisition */
 bool TestDataThread::isReady()
@@ -116,11 +122,6 @@ int TestDataThread::modifyChannelName(int channel, String newName)
   return 0;
 }
 
-//int TestDataThread::modifyChannelGain(int channel, float gain)
-//{
-//}
-//
-//
 void TestDataThread::getEventChannelNames(StringArray& names)
 {
   names.clear();
@@ -130,13 +131,20 @@ void TestDataThread::getEventChannelNames(StringArray& names)
     }
 }
 
+int TestDataThread::modifyChannelGain(int channel, float gain)
+{
+  return 0;
+}
+
+
+
 bool TestDataThread::usesCustomNames()
 {
   return false;
 }
 
 
-//  /** Create the DataThread custom editor, if any*/
+  /** Create the DataThread custom editor, if any*/
 //GenericEditor* TestDataThread::createEditor(SourceNode* sn)
 //{
 //}
