@@ -7,8 +7,9 @@
 
 #include <stdio.h>
 #include <string.h>
-//#include <chrono>
-//#include <thread>
+#include <chrono>
+#include <thread>
+#include <math.h>
 
 class TestDataThread : public DataThread
 
@@ -78,6 +79,7 @@ private:
   void setDefaultChannelNames();
   int num_channels;
   int looptime;
+  int64 samplecounter;
 
 };
 

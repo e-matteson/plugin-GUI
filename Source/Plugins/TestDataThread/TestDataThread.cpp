@@ -4,8 +4,9 @@
 
 TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
 {
-	looptime = 5;
+  looptime = 5;
   num_channels = 8;
+  samplecounter = 0;
 }
 
 TestDataThread::~TestDataThread()
@@ -28,11 +29,19 @@ void TestDataThread::run()
     method for each DataThread.*/
 bool TestDataThread::updateBuffer()
 {
+	std::cout << "updating  bufer" << std::endl;
+	uint64 eventCode = 0;
+	float thisSample;
+
+	thisSample = sin(samplecounter);
+
+	dataBuffer->addToBuffer(&thisSample, &samplecounter, &eventCode, 1);
+	samplecounter++;
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(looptime));
+
 	return true;
 
-
-
-	//std::this_thread::sleep_for(std::chrono::milliseconds(looptime));
 }
 
   /** Returns true if the data source is connected, false otherwise.*/

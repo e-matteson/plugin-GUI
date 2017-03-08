@@ -52,7 +52,7 @@ extern "C" EXPORT int getPluginInfo(int index, Plugin::PluginInfo* info)
 	case 0:
 		info->type = Plugin::DatathreadPlugin; //Type of plugin. See "Source/Processors/PluginManager/OpenEphysPlugin.h" for complete info about the different type structures
 		//For processor
-		info->dataThread.name = "Test filter Processor"; //Processor name shown in the GUI
+		info->dataThread.name = "Test DataThread Processor"; //Processor name shown in the GUI
 		info->dataThread.creator = &createDataThread<TestDataThread>; //Class factory pointer. Replace "ExampleProcessor" with the name of your class.
 		break;
 	
