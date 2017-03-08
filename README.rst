@@ -41,3 +41,18 @@ Figuring out program structure
 - AudioProcessorGraph has an AudioSampleBuffer called renderingBuffers that stores the data while it is read or modified by each node in the graph. Specifically, when a ProcessBufferOp is performed for some specific processor, it takes a reference to renderingBuffer and creates a new AudioSampleBuffer that contains pointers to the same data stored in renderingBuffer. It passes that buffer to the AudioProcessor itself, which can use the pointers to read and modify the original data in renderingBuffer.
 
 - AudioProcessorGraph is not itself multithreaded. Individual processors/nodes can contain multiple threads. For example, sources will often have a separate DataThread that gets data from some external hardware (like the acquisition board's FPGA) and stores it in a buffer. When AudioProcessorGraph call its process() callback, it immediately reads some recent data out of that buffer and returns it.
+
+- DataThreads can be defined and used in ProcessorGraphs in open ephys. The open ephys ProcessorManager automatically creates a Processor that wraps around the DataThread (so you can write plugins that are just DataThreads, no need to include a Processor with it, this is how the FPGA source is implemented) and accesses the DataThread's internal buffer, InputBuffer, when called. The DataThread then just has to handle putting data into this InputBuffer, and open ephys will handle interfacing that with the ProcessorGraph.
+
+- The InputBuffer is an instance of the DataBuffer class, which we assume will handle making reading and writing to the buffer thread safe (we read some description about locking).
+
+- In DataThread, run() calls updatebuffer() in a loop until threadShouldExit() returns true, or updatebuffer() returns false. In the FPGA code, the threadShouldExit will return true once stopAquisition() is called.
+
+
+Questions
+----------------------------
+In line 1452 of RHD2000Thread, under stopAquisition(), it calls signalThreadShouldExit(), why doesn't it use stopthread()?
+
+For making sources using DataThread, what happens if the aquisition is slow and the GUI requests data faster than the InputBuffer is filled? What will the GUI receive?
+
+We would like to know how openEphys is handling starting/stopping threads vs starting/stopping acquisition. That is, when stopping and restarting aquisition, does it always delete and recreate the thread? Does it maintain all connections to devices between pauses in acquisition or does it need to re-initialize with hardware each time startAqusition() is called?
