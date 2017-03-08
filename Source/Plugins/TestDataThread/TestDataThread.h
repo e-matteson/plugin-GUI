@@ -16,7 +16,7 @@ class TestDataThread : public DataThread
 public:
 
   // TODO should the constructor do anything more specific?
-  // TestDataThread(SourceNode* sn);
+  TestDataThread(SourceNode* sn);
   // ~TestDataThread();
 
   void run(); // this isn't virtual, we can use the parent's if we want
@@ -36,30 +36,30 @@ public:
   /** Stops data transfer.*/
   bool stopAcquisition();
 
-  ///** Returns the number of continuous headstage channels the data source can provide.*/
-  //int getNumHeadstageOutputs();
+  /** Returns the number of continuous headstage channels the data source can provide.*/
+  int getNumHeadstageOutputs();
 
-  ///** Returns the number of continuous aux channels the data source can provide.*/
-  //int getNumAuxOutputs();
+  /** Returns the number of continuous aux channels the data source can provide.*/
+  int getNumAuxOutputs();
 
-  ///** Returns the number of continuous ADC channels the data source can provide.*/
-  //int getNumAdcOutputs();
+  /** Returns the number of continuous ADC channels the data source can provide.*/
+  int getNumAdcOutputs();
 
-  ///** Returns the sample rate of the data source.*/
-  //float getSampleRate();
+  /** Returns the sample rate of the data source.*/
+  float getSampleRate();
 
-  ///** Returns the volts per bit of the data source.*/
-  //float getBitVolts(Channel* chan);
+  /** Returns the volts per bit of the data source.*/
+  float getBitVolts(Channel* chan);
 
-  ///** Returns the number of event channels of the data source.*/
-  //int getNumEventChannels();
+  /** Returns the number of event channels of the data source.*/
+  int getNumEventChannels();
 
   /** Notifies if the device is ready for acquisition */
   bool isReady();
 
-  //int modifyChannelName(int channel, String newName);
+  int modifyChannelName(int channel, String newName);
 
-  //int modifyChannelGain(int channel, float gain);
+  int modifyChannelGain(int channel, float gain);
 
   /*  virtual void getChannelsInfo(StringArray &Names, Array<ChannelType> &type, Array<int> &stream, Array<int> &originalChannelNumber, Array<float> &gains)
       {
@@ -67,7 +67,7 @@ public:
 
   void getEventChannelNames(StringArray& names);
 
-  //bool usesCustomNames();
+  bool usesCustomNames();
 
 
   /** Create the DataThread custom editor, if any*/
