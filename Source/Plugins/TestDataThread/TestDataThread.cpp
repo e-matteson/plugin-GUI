@@ -4,7 +4,7 @@
 
 TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
 {
-  looptime = 5;
+  looptime = 33;
   num_channels = 8;
   samplecounter = 0;
   dataBuffer = new DataBuffer(2, 10000);
@@ -30,17 +30,17 @@ void TestDataThread::run()
     method for each DataThread.*/
 bool TestDataThread::updateBuffer()
 {
-	std::cout << "updating  bufer" << std::endl;
+	// std::cout << "updating  bufer" << std::endl;
 	uint64 eventCode = 0;
 	float thisSample;
 
-	/*thisSample = sin(samplecounter);*/
-	thisSample = 1;
+	thisSample = sin(samplecounter/100000.0);
+	// thisSample = 1;
 
 	dataBuffer->addToBuffer(&thisSample, &samplecounter, &eventCode, 1);
 	samplecounter++;
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(looptime));
+	std::this_thread::sleep_for(std::chrono::microseconds(looptime));
 
 	return true;
 
@@ -106,7 +106,8 @@ int TestDataThread::getNumAdcOutputs()
   /** Returns the sample rate of the data source.*/
 float TestDataThread::getSampleRate()
 {
-	return 1000 / looptime;
+  return 30000;
+	// return 1000000.0 / looptime;
 }
 
   /** Returns the volts per bit of the data source.*/
