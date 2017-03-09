@@ -8,12 +8,12 @@ TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
   sampleCounter = 0;
 
   // how long to sleep between writes - controls actual sample rate
-  sleepMicrosecs = 100;
+  sleepMicrosecs = 20;
+
   reportedSampleRate = 10000;
 
   numChannels = 1;
-  dataBuffer = new DataBuffer(numChannels, 1000000); // what should the size be?
-  // dataBuffer = new DataBuffer(numChannels, 10000); // what should the size be?
+  dataBuffer = new DataBuffer(numChannels, 10000); // what should the size be?
 }
 
 TestDataThread::~TestDataThread()
@@ -46,7 +46,6 @@ bool TestDataThread::updateBuffer()
 float TestDataThread::getSampleRate()
 {
   return reportedSampleRate;
-	// return 1000000.0 / sleepMicrosecs;
 }
 
   /** Returns true if the data source is connected, false otherwise.*/
