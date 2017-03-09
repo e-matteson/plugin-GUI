@@ -20,9 +20,6 @@ public:
   TestDataThread(SourceNode* sn);
   ~TestDataThread();
 
-  void run(); // this isn't virtual, we can use the parent's if we want
-
-
   /** Fills the DataBuffer with incoming data. This is the most important
       method for each DataThread.*/
   bool updateBuffer();
@@ -77,9 +74,10 @@ public:
 private:
 
   void setDefaultChannelNames();
-  int num_channels;
-  int looptime;
-  int64 samplecounter;
+  int numChannels;
+  int sleepMicrosecs;
+  int64 sampleCounter;
+  int64 reportedSampleRate;
 
 };
 
