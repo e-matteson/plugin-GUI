@@ -12,7 +12,7 @@ TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
 
   reportedSampleRate = 10000;
 
-  numChannels = 1;
+  numChannels = 2;
   dataBuffer = new DataBuffer(numChannels, 10000); // what should the size be?
 }
 
@@ -28,9 +28,10 @@ bool TestDataThread::updateBuffer()
 	uint64 eventCode = 0;
 
   // make the period of the sine wave scale with the reported sample rate
-	float thisSample = sin(sampleCounter/reportedSampleRate);
+	float thisSample[numChannels] = {sin(sampleCounter/reportedSampleRate),
+                                   0};
 
-	dataBuffer->addToBuffer(&thisSample, &sampleCounter, &eventCode, 1);
+	dataBuffer->addToBuffer(thisSample, &sampleCounter, &eventCode, 1);
 	sampleCounter++;
 
   // sleep, to reduce the actual sample rate
@@ -102,7 +103,7 @@ int TestDataThread::getNumAuxOutputs()
   /** Returns the number of continuous ADC channels the data source can provide.*/
 int TestDataThread::getNumAdcOutputs()
 {
-	return 1;
+	return 2;
 }
 
 
