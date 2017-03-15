@@ -4,25 +4,20 @@
 
 TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
 {
-  looptime = 33;
-  num_channels = 8;
-  samplecounter = 0;
-  dataBuffer = new DataBuffer(2, 10000);
+  // stores the number of samples written to the buffer
+  sampleCounter = 0;
+
+  // how long to sleep between writes - controls actual sample rate
+  sleepMicrosecs = 20;
+
+  reportedSampleRate = 10000;
+
+  numChannels = 2;
+  dataBuffer = new DataBuffer(numChannels, 10000); // what should the size be?
 }
 
 TestDataThread::~TestDataThread()
 {
-}
-
-// We could optionally override run() to do some initialization routine
-//  before updateBuffer() starts running in a loop
-void TestDataThread::run()
-{
-  // TODO initialize the NSP here? or do that in startAcquisition()?
-
-  // Call the base class's run
-  DataThread::run();
-
 }
 
 
@@ -30,20 +25,28 @@ void TestDataThread::run()
     method for each DataThread.*/
 bool TestDataThread::updateBuffer()
 {
-	// std::cout << "updating  bufer" << std::endl;
 	uint64 eventCode = 0;
-	float thisSample;
 
-	thisSample = sin(samplecounter/100000.0);
-	// thisSample = 1;
+  // make the period of the sine wave scale with the reported sample rate
+	float thisSample[numChannels] = {sin(sampleCounter/reportedSampleRate),
+                                   0};
 
-	dataBuffer->addToBuffer(&thisSample, &samplecounter, &eventCode, 1);
-	samplecounter++;
+	dataBuffer->addToBuffer(thisSample, &sampleCounter, &eventCode, 1);
+	sampleCounter++;
 
-	std::this_thread::sleep_for(std::chrono::microseconds(looptime));
+  // sleep, to reduce the actual sample rate
+	std::this_thread::sleep_for(std::chrono::microseconds(sleepMicrosecs));
+
+  // or just yield, to write samples as quickly as possible
+	// std::this_thread::yield();
 
 	return true;
+}
 
+/** Returns the sample rate of the data source.*/
+float TestDataThread::getSampleRate()
+{
+  return reportedSampleRate;
 }
 
   /** Returns true if the data source is connected, false otherwise.*/
@@ -100,15 +103,9 @@ int TestDataThread::getNumAuxOutputs()
   /** Returns the number of continuous ADC channels the data source can provide.*/
 int TestDataThread::getNumAdcOutputs()
 {
-	return 1;
+	return 2;
 }
 
-  /** Returns the sample rate of the data source.*/
-float TestDataThread::getSampleRate()
-{
-  return 30000;
-	// return 1000000.0 / looptime;
-}
 
   /** Returns the volts per bit of the data source.*/
 float TestDataThread::getBitVolts(Channel* chan)
@@ -137,7 +134,7 @@ int TestDataThread::modifyChannelName(int channel, String newName)
 void TestDataThread::getEventChannelNames(StringArray& names)
 {
   names.clear();
-  for (int k = 0; k < num_channels; k++)
+  for (int k = 0; k < numChannels; k++)
     {
       names.add("TEST"+String(k+1));
     }

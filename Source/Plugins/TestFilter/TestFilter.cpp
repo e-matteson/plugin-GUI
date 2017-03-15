@@ -72,6 +72,8 @@ void TestFilter::setParameter(int parameterIndex, float newValue)
 void TestFilter::process(AudioSampleBuffer& buffer,
                                MidiBuffer& events)
 {
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	/**
 	Generic structure for processing buffer data 
 	*/
