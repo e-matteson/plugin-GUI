@@ -10,15 +10,16 @@
 #include <chrono>
 #include <thread>
 #include <math.h>
+#include "cbsdk.h"
 
-class TestDataThread : public DataThread
+class NSPSource : public DataThread
 
 {
 public:
 
   // TODO should the constructor do anything more specific?
-  TestDataThread(SourceNode* sn);
-  ~TestDataThread();
+  NSPSource(SourceNode* sn);
+  ~NSPSource();
 
   void run(); // this isn't virtual, we can use the parent's if we want
 
@@ -80,6 +81,10 @@ private:
   int num_channels;
   int looptime;
   int64 samplecounter;
+  UINT32 m_blkrckInstance;
+  cbSdkTrialCont m_trialCont;
+  cbSdkResult ResNSP;
+  CBlackrock m_blackrock
 
 };
 

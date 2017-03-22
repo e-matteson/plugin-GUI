@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LFP_Viewer", "LFP_Viewer\LFP_Viewer.vcxproj", "{41BD734E-4939-47AD-9714-9629538F7206}"
 EndProject
@@ -40,6 +40,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFilter", "TestFilter\TestFilter.vcxproj", "{375EF929-354A-41C5-B0E2-8715BF23B0EC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDataThread", "TestDataThread\TestDataThread.vcxproj", "{3028A49B-6B67-491F-8E2C-30F4237F81D9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NSPSource", "NSPSource\NSPSource.vcxproj", "{1AD4843D-FF31-472C-9103-0A819B2E02B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -275,6 +277,18 @@ Global
 		{3028A49B-6B67-491F-8E2C-30F4237F81D9}.Release|Win32.ActiveCfg = Release|Win32
 		{3028A49B-6B67-491F-8E2C-30F4237F81D9}.Release|Win32.Build.0 = Release|Win32
 		{3028A49B-6B67-491F-8E2C-30F4237F81D9}.Release|x64.ActiveCfg = Release|x64
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Debug|Win32.Build.0 = Debug|Win32
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Debug|x64.ActiveCfg = Debug|x64
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Debug|x64.Build.0 = Debug|x64
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Release|Win32.ActiveCfg = Release|Win32
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Release|Win32.Build.0 = Release|Win32
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Release|x64.ActiveCfg = Release|x64
+		{1AD4843D-FF31-472C-9103-0A819B2E02B1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -48,7 +48,7 @@ Figuring out program structure
 
 - In DataThread, run() calls updatebuffer() in a loop until threadShouldExit() returns true, or updatebuffer() returns false. In the FPGA code, the threadShouldExit will return true once stopAquisition() is called.
 
-
+- The update rate of the main signal chain can be set in the GUI. A new loop happens whenever the computer audiocard sends a callback, and it does so whenever its buffer is full. It has a constant sampling rate, so changing the buffer size on the card changes the period between callbacks. This can be done by clicking on an invisible button between the play and gate areas in the GUI.
 Questions
 ----------------------------
 In line 1452 of RHD2000Thread, under stopAquisition(), it calls signalThreadShouldExit(), why doesn't it use stopthread()?

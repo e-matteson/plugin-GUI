@@ -1,22 +1,28 @@
-#include "TestDataThread.h"
-#include "TestDataThreadEditor.h"
+#include "NSPSource.h"
+#include "NSPSourceEditor.h"
 
 
-TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
+NSPSource::NSPSource(SourceNode* sn) : DataThread(sn)
 {
   looptime = 33;
   num_channels = 8;
   samplecounter = 0;
   dataBuffer = new DataBuffer(2, 10000);
+
+  m_blkrckInstance = 0;
+  cbSdkConnection con = cbSdkConnection();
+  cbSdkConnectionType conType = CBSDKCONNECTION_DEFAULT;
+  ResNSP = cbSdkOpen(m_blkrckInstance, conType, con);
 }
 
-TestDataThread::~TestDataThread()
+NSPSource::~NSPSource()
 {
+	ResNSP = cbSdkClose(m_blkrckInstance);
 }
 
 // We could optionally override run() to do some initialization routine
 //  before updateBuffer() starts running in a loop
-void TestDataThread::run()
+void NSPSource::run()
 {
   // TODO initialize the NSP here? or do that in startAcquisition()?
 
@@ -28,43 +34,84 @@ void TestDataThread::run()
 
 /** Fills the DataBuffer with incoming data. This is the most important
     method for each DataThread.*/
-bool TestDataThread::updateBuffer()
+bool NSPSource::updateBuffer()
 {
-	// std::cout << "updating  bufer" << std::endl;
-	uint64 eventCode = 0;
-	float thisSample;
 
-	thisSample = sin(samplecounter/100000.0);
-	// thisSample = 1;
+	UINT32 cbtime1 = 0;
+	UINT32 cbtime2 = 0;
+	UINT32 prev_time;
 
-	dataBuffer->addToBuffer(&thisSample, &samplecounter, &eventCode, 1);
-	samplecounter++;
+	// PULL DATA
+	prev_time = cbtime1;
+	cbtime2 = cbtime1;
+	while (cbtime2 == cbtime1)		//wait until new data is ready, it is approx 10 ms
+	{
+		cbtime2 = m_blackrock->getTime();
+		Sleep(1);
+	}
 
-	std::this_thread::sleep_for(std::chrono::microseconds(looptime));
+	m_blackrock->get_spikes(m_spikesInt32, m_spikesDouble, m_rasterHolder);
+	cbtime1 = m_blackrock->getTime();
+	cbSdkResult resTest2;
 
 	return true;
 
 }
 
   /** Returns true if the data source is connected, false otherwise.*/
-bool TestDataThread::foundInputSource()
+bool NSPSource::foundInputSource()
 {
 	return true;
 }
 
   /** Initializes data transfer.*/
-bool TestDataThread::startAcquisition()
+bool NSPSource::startAcquisition()
 {
-  std::cout << "TestDataThread starting acquisition." << std::endl;
+  std::cout << "NSPSource starting acquisition." << std::endl;
+
+  UINT16 uBegChan = 0;
+  UINT32 uBegMask = 0;
+  UINT32 uBegVal = 0;
+  UINT16 uEndChan = 0;
+  UINT32 uEndMask = 0;
+  UINT32 uEndVal = 0;
+  bool   bDouble = false;
+  bool   bAbsolute = false;
+  UINT32 uWaveforms = 0;
+  UINT32 uConts = cbSdk_CONTINUOUS_DATA_SAMPLES;
+  UINT32 uEvents = 0;
+  UINT32 uComments = 0;
+  UINT32 uTrackings = 0;
+  UINT32 bWithinTrial = false;
+  UINT32 bActive = 1; // 0 leave buffer intact, 1 clear the buffer
+
+  ResNSP = cbSdkSetTrialConfig(m_blkrckInstance
+	  , bActive
+	  , uBegChan
+	  , uBegMask
+	  , uBegVal
+	  , uEndChan
+	  , uEndMask
+	  , uEndVal
+	  , bDouble
+	  , uWaveforms
+	  , uConts
+	  , uEvents
+	  , uComments
+	  , uTrackings
+	  , bAbsolute);
+
+  ResNSP = cbSdkInitTrialData(m_blkrckInstance, NULL, &m_trialCont, NULL, NULL);
+
   startThread();
 
   return true;
 }
 
   /** Stops data transfer.*/
-bool TestDataThread::stopAcquisition()
+bool NSPSource::stopAcquisition()
 {
-  std::cout << "TestDataThread stopping acquisition." << std::endl;
+  std::cout << "NSPSource stopping acquisition." << std::endl;
 
   if (isThreadRunning())
     {
@@ -86,55 +133,55 @@ bool TestDataThread::stopAcquisition()
 
 
   /** Returns the number of continuous headstage channels the data source can provide.*/
-int TestDataThread::getNumHeadstageOutputs()
+int NSPSource::getNumHeadstageOutputs()
 {
 	return 0;
 }
 
   /** Returns the number of continuous aux channels the data source can provide.*/
-int TestDataThread::getNumAuxOutputs()
+int NSPSource::getNumAuxOutputs()
 {
 	return 0;
 }
 
   /** Returns the number of continuous ADC channels the data source can provide.*/
-int TestDataThread::getNumAdcOutputs()
+int NSPSource::getNumAdcOutputs()
 {
 	return 1;
 }
 
   /** Returns the sample rate of the data source.*/
-float TestDataThread::getSampleRate()
+float NSPSource::getSampleRate()
 {
   return 30000;
 	// return 1000000.0 / looptime;
 }
 
   /** Returns the volts per bit of the data source.*/
-float TestDataThread::getBitVolts(Channel* chan)
+float NSPSource::getBitVolts(Channel* chan)
 {
 	return 1;
 }
 
   /** Returns the number of event channels of the data source.*/
-int TestDataThread::getNumEventChannels()
+int NSPSource::getNumEventChannels()
 {
 	return 0;
 }
 
   /** Notifies if the device is ready for acquisition */
-bool TestDataThread::isReady()
+bool NSPSource::isReady()
 {
 	return true;
 }
 
-int TestDataThread::modifyChannelName(int channel, String newName)
+int NSPSource::modifyChannelName(int channel, String newName)
 {
   // Do something with ChannelCustomInfo, eventually
   return 0;
 }
 
-void TestDataThread::getEventChannelNames(StringArray& names)
+void NSPSource::getEventChannelNames(StringArray& names)
 {
   names.clear();
   for (int k = 0; k < num_channels; k++)
@@ -143,25 +190,25 @@ void TestDataThread::getEventChannelNames(StringArray& names)
     }
 }
 
-int TestDataThread::modifyChannelGain(int channel, float gain)
+int NSPSource::modifyChannelGain(int channel, float gain)
 {
   return 0;
 }
 
 
 
-bool TestDataThread::usesCustomNames()
+bool NSPSource::usesCustomNames()
 {
   return false;
 }
 
 
   /** Create the DataThread custom editor, if any*/
-//GenericEditor* TestDataThread::createEditor(SourceNode* sn)
+//GenericEditor* NSPSource::createEditor(SourceNode* sn)
 //{
 //}
 
 
-void TestDataThread::setDefaultChannelNames()
+void NSPSource::setDefaultChannelNames()
 {
 }
