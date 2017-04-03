@@ -56,3 +56,8 @@ In line 1452 of RHD2000Thread, under stopAquisition(), it calls signalThreadShou
 For making sources using DataThread, what happens if the aquisition is slow and the GUI requests data faster than the InputBuffer is filled? What will the GUI receive?
 
 We would like to know how openEphys is handling starting/stopping threads vs starting/stopping acquisition. That is, when stopping and restarting aquisition, does it always delete and recreate the thread? Does it maintain all connections to devices between pauses in acquisition or does it need to re-initialize with hardware each time startAqusition() is called?
+
+blackrock:
+----------------------------
+
+What does bFlushBuffer do? Should we leave it as true? [[file:~/Dropbox%20(Brown)/Borton%20lab/Transfer%20space/China%20Stimulation%20Code/AutoRecruitmentCurves/Blackrock.cpp::bool%20bFlushBuffer%20=%20true;]]
