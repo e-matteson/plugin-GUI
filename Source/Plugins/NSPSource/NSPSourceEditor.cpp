@@ -21,10 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include "TestDataThreadEditor.h"
-#include "TestDataThread.h"
+#include "NSPSourceEditor.h"
+#include "NSPSource.h"
 
-TestDataThreadEditor::TestDataThreadEditor(GenericProcessor* parentNode, bool useDefaultParameterEditors = true)
+NSPSourceEditor::NSPSourceEditor(GenericProcessor* parentNode, bool useDefaultParameterEditors = true)
 	: GenericEditor(parentNode, useDefaultParameterEditors)
 {
 	//Most used buttons are UtilityButton, which shows a simple button with text and ElectrodeButton, which is an on-off button which displays a channel.
@@ -37,7 +37,7 @@ TestDataThreadEditor::TestDataThreadEditor(GenericProcessor* parentNode, bool us
 }
 
 
-TestDataThreadEditor::~TestDataThreadEditor()
+NSPSourceEditor::~NSPSourceEditor()
 {
 }
 
@@ -47,7 +47,7 @@ The listener methods that reacts to the button click. The same method is called 
 on the editor, so the button variable, which cointains a pointer to the button that called the method
 has to be checked to know which function to perform.
 */
-void TestDataThreadEditor::buttonEvent(Button* button)
+void NSPSourceEditor::buttonEvent(Button* button)
 {
 	if (button == exampleButton)
 	{

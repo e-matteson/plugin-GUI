@@ -8,7 +8,7 @@ TestDataThread::TestDataThread(SourceNode* sn) : DataThread(sn)
   sampleCounter = 0;
 
   // how long to sleep between writes - controls actual sample rate
-  sleepMicrosecs = 20;
+  sleepMicrosecs = 1;
 
   reportedSampleRate = 10000;
 
@@ -28,8 +28,10 @@ bool TestDataThread::updateBuffer()
 	uint64 eventCode = 0;
 
   // make the period of the sine wave scale with the reported sample rate
-	float thisSample[numChannels] = {sin(sampleCounter/reportedSampleRate),
-                                   0};
+	float thisSample[1];
+	thisSample[0] = sin(static_cast<float>(sampleCounter*5) / static_cast<float>(reportedSampleRate));
+
+	debugFile << thisSample[0] << "/r";
 
 	dataBuffer->addToBuffer(thisSample, &sampleCounter, &eventCode, 1);
 	sampleCounter++;
@@ -59,6 +61,7 @@ bool TestDataThread::foundInputSource()
 bool TestDataThread::startAcquisition()
 {
   std::cout << "TestDataThread starting acquisition." << std::endl;
+  debugFile.open(debugPath);
   startThread();
 
   return true;
@@ -68,6 +71,7 @@ bool TestDataThread::startAcquisition()
 bool TestDataThread::stopAcquisition()
 {
   std::cout << "TestDataThread stopping acquisition." << std::endl;
+  debugFile.close();
 
   if (isThreadRunning())
     {

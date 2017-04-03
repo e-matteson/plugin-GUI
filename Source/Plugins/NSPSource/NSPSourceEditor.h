@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef TESTDATATHREADEDITOR_H_INCLUDED
-#define TESTDATATHREADEDITOR_H_INCLUDED
+#ifndef NSPSOURCEEDITOR_H_INCLUDED
+#define NSPSOURCEEDITOR_H_INCLUDED
 
 #include <EditorHeaders.h>
 
@@ -38,17 +38,17 @@ have a single button which will set a parameter in the processor.
 
 */
 
-class TestDataThreadEditor : public GenericEditor	//Generic Editor adds listeners for buttons and sliders.
+class NSPSourceEditor : public GenericEditor	//Generic Editor adds listeners for buttons and sliders.
 											//Other possible JUCE controls can be added and listened by inheriting from the appropiate XXX:Listener class
 											//See JUCE documentation to find other available controls.
 {
 public:
 
 	/** The class constructor, used to initialize any members. */
-	TestDataThreadEditor(GenericProcessor* parentNode, bool useDefaultParameterEditors);
+	NSPSourceEditor(GenericProcessor* parentNode, bool useDefaultParameterEditors);
 
 	/** The class destructor, used to deallocate memory */
-	~TestDataThreadEditor();
+	~NSPSourceEditor();
 
 	/**
 	Unlike processors, which have a minimum set of required methods,
@@ -81,7 +81,7 @@ private:
 	//Always use JUCE RAII classes instead of pure pointers.
 	ScopedPointer<Button> exampleButton;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TestDataThreadEditor);
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NSPSourceEditor);
 };
 
 #endif

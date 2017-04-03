@@ -1,5 +1,6 @@
-#include "cbsdk.h" // Blackrock library!?
+#include "cbsdk.h"
 #include <string>
+#include <Windows.h>
 
 #pragma once
 class CBlackrock

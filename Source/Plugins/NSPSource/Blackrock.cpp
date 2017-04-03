@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Blackrock.h"
 #include <string>
 
@@ -41,7 +40,7 @@ void CBlackrock::setup_connection_blackrock()
 	resTest2 = cbSdkGetChannelConfig( m_blkrckInstance, channel, &chaninfo);
 
 	// CHECK and STORE NAMES OF CHANNEL BEING READ
-	char label[cbNUM_ANALOG_CHANS][17];
+	char label[cbNUM_ANALOG_CHANS][cbLEN_STR_LABEL];
 	for (int i=0; i<cbNUM_ANALOG_CHANS ; i++)
 	{
 		UINT16 channelSDK = i + 1;
@@ -109,14 +108,14 @@ void CBlackrock::setup_connection_blackrock()
 
 	UINT32 bActive2 = 0; //activate channel 1, deactivating 0
 
-	//DEACTIVATING THE NEURAL DATA
-	int nchan = 96;
-	UINT16 dchannel = 0;
-	for(int i=1; i<=nchan; i++)
-	{  //i must start from 1 because dchannel =0, bactive= 0 means deactivate everything
-		dchannel = i;
-		resTest2 = cbSdkSetChannelMask(m_blkrckInstance, dchannel, bActive2);
-	}
+	////DEACTIVATING THE NEURAL DATA
+	//int nchan = 96;
+	//UINT16 dchannel = 0;
+	//for(int i=1; i<=nchan; i++)
+	//{  //i must start from 1 because dchannel =0, bactive= 0 means deactivate everything
+	//	dchannel = i;
+	//	resTest2 = cbSdkSetChannelMask(m_blkrckInstance, dchannel, bActive2);
+	//}
 }
 
 int CBlackrock::connection_init_EMG() // BLACKROCK
@@ -148,7 +147,7 @@ int CBlackrock::connection_init_EMG() // BLACKROCK
 
 
 	// CHECK and STORE NAMES OF CHANNEL BEING READ
-	char label[cbNUM_ANALOG_CHANS][17];
+	char label[cbNUM_ANALOG_CHANS][cbLEN_STR_LABEL];
 	for( int i=0; i<cbNUM_ANALOG_CHANS ; i++)
 	{
 		UINT16 channelSDK = i+1;
@@ -309,7 +308,7 @@ int CBlackrock::connection_init_neural() // BLACKROCK
 	resTest2 = cbSdkGetChannelConfig( m_blkrckInstance, channel, &chaninfo);
 
 	// CHECK and STORE NAMES OF CHANNEL BEING READ
-	char label[cbNUM_ANALOG_CHANS][17];
+	char label[cbNUM_ANALOG_CHANS][cbLEN_STR_LABEL];
 	for( int i=0; i<cbNUM_ANALOG_CHANS ; i++)
 	{
 		UINT16 channelSDK = i+1;
@@ -382,7 +381,7 @@ int CBlackrock::connection_init_neural() // BLACKROCK
 	UINT8 charset = 1;
 	std::string commentMessage = "start Neu";
 	//resTest2 = cbSdkSetComment( nInstance, 8912896, charset, commentMessage.c_str());
-	resTest2 = cbSdkSetComment(m_blkrckInstance, 50000, charset, commentMessage.c_str());
+	//resTest2 = cbSdkSetComment(m_blkrckInstance, 50000, charset, commentMessage.c_str());
 
 	//DEACTIVATING ALL THE CHANNELS
 	UINT32 bActive2 = 0; //activate channel 1, deactivating 0

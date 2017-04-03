@@ -11,6 +11,9 @@
 #include <thread>
 #include <math.h>
 #include "cbsdk.h"
+#include "Blackrock.h"
+#include <iostream>
+#include <fstream>
 
 class NSPSource : public DataThread
 
@@ -78,13 +81,23 @@ public:
 private:
 
   void setDefaultChannelNames();
-  int num_channels;
-  int looptime;
-  int64 samplecounter;
-  UINT32 m_blkrckInstance;
-  cbSdkTrialCont m_trialCont;
-  cbSdkResult ResNSP;
-  CBlackrock m_blackrock
+
+  UINT32*** m_spikesInt32;
+  double*** m_spikesDouble;
+  double* m_rasterHolder;
+  CBlackrock* m_blackrock;
+  static const int m_noOfNeuroCh = 96;
+  double** rasterWindow;
+  static const int Buffer_length = 15;
+  double Raster_Time[Buffer_length];
+  static const int m_Fs = 30000;
+  float firingRates[m_noOfNeuroCh+1];
+  std::ofstream debugFile;
+  std::string debugPath = "NSP_debug.txt";
+  int i_win;
+  int loopCount;
+  INT64 cbtime1;
+  int64 elapsedTime;
 
 };
 

@@ -6,6 +6,7 @@
 #include <DataThreadHeaders.h>
 
 #include <stdio.h>
+#include <fstream>
 #include <string.h>
 #include <chrono>
 #include <thread>
@@ -78,6 +79,8 @@ private:
   int sleepMicrosecs;
   int64 sampleCounter;
   int64 reportedSampleRate;
+  std::ofstream debugFile;
+  std::string debugPath = "timestamps.txt";
 
 };
 
